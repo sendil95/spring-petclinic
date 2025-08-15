@@ -1,6 +1,5 @@
 // delcarative
 
-
 pipeline {
     agent any
     
@@ -9,7 +8,12 @@ pipeline {
         
         stage("Build"){
             steps {
-                sh "./mvnw package"
+                sh '''
+                    export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+                    export PATH=$JAVA_HOME/bin:$PATH
+                    ./mvnw package
+                '''
+               
             }
        
         }
