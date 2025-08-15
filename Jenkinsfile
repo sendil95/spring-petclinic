@@ -42,7 +42,7 @@ pipeline {
         unstable {
             emailext(
                 subject: "🟡 Attention : Build instable pour ${env.JOB_NAME}",
-                body: "Il semble y avoir quelques problèmes avec le build ${env.BUILD_NUMBER}. Veuillez vérifier ici : ${env.BUILD_URL}",
+                body: "Il semble y avoir quelques problèmes avec le build ${env.BUILD_NUMBER}. Veuille vérifier ici : ${env.BUILD_URL}",
                 recipientProviders: [culprits(), developers()],
                 to: 'test@teachmemore.fr'
             )
