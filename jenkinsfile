@@ -1,0 +1,34 @@
+pipeline {
+    agent any
+    
+    stages {
+    
+        stage("Build") {
+            steps {
+                sh '''
+                    export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+                    export PATH=$JAVA_HOME/bin:$PATH
+                    ./mvnw package
+                '''
+            }
+        }
+    
+        stage("capture") {
+            steps {
+                archiveArtifacts artifacts: '**/target/*.jar'
+                jacoco() // Plugin Jacoco (attention à bien l'avoir installé)
+                junit '**/target/surefire-reports/*.xml'
+            }
+        } 
+    }
+    
+    post {
+        success {
+            emailext(
+                subject: 'testest', 
+                body: "hello c'est ok",
+                to: 'test@gmail.com'
+            )
+        }
+    }
+}
